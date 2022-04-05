@@ -15,6 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = 'django-insecure-o6aa&&*+v)udu7ohlh)yi$0&@^e%_t6hqcvxqo5yonnvr%n9&u'
+
+
+DEBUG = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -93,6 +98,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
+    }
+}
+
 
 
 # Internationalization
@@ -212,7 +230,3 @@ RECAPTCHA_SCORE_THRESHOLD = 0.5
 SITE_ID = 1
 
 
-try:
-    from .local_settings import *
-except ImportError:
-    from .prod_settings import *
